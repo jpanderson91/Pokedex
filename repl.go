@@ -12,4 +12,3 @@ func cleanInput(text string) []string {
 	words := strings.Fields(trimmed)
 	return words
 }
-
