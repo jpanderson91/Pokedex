@@ -11,6 +11,7 @@ import (
 func main() {
 	cfg := &config{
 		pokeapiClient: pokeapi.NewClient(5 * time.Minute),
+		caughtPokemon: map[string]pokeapi.Pokemon{},
 	}
 	startRepl(cfg)
 }
