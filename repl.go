@@ -11,7 +11,7 @@ import (
 type cliCommand struct {
 	name string
 	description string
-	callback func(*config) error
+	callback func(*config, []string) error
 }
 
 type config struct {
@@ -28,9 +28,9 @@ func getCommands() map[string]cliCommand {
 			callback: commandExit,
 		},
 		"help": {
-    		name:        "help",
-    		description: "Displays a help message",
-    		callback:    commandHelp,
+			name:        "help",
+			description: "Displays a help message",
+			callback:    commandHelp,
 		},
 		"map": {
 			name: "map",
@@ -42,7 +42,12 @@ func getCommands() map[string]cliCommand {
 			name: "mapb",
 			description: "Get the previous page of locations",
 			callback: commandMapb,
-    		
+            
+		},
+		"explore": {
+			name: "explore",
+			description: "Explore a location area: explore <area_name>",
+			callback: commandExplore,
 		},
 	}
 }
@@ -69,17 +74,21 @@ func startRepl(cfg *config) {
 		// capture the first "word" of the input and use it to print: Your command was : <first word>
 		if len(cleanedInput) > 0 {
 			commandName := cleanedInput[0]
-    		command, exists := getCommands()[commandName]
-    		if exists {
-       			 // call the callback here
-				 err := command.callback(cfg)
-				 if err != nil {
+			command, exists := getCommands()[commandName]
+			if exists {
+				// call the callback here, passing any args after the command
+				args := []string{}
+				if len(cleanedInput) > 1 {
+					args = cleanedInput[1:]
+				}
+				err := command.callback(cfg, args)
+				if err != nil {
 					fmt.Println(err)
-				 }
-   			 } else {
-        		// print "Unknown command"
+				}
+			} else {
+				// print "Unknown command"
 				fmt.Println("Unknown command")
-    		}
+			}
 		}
 	}
 }
