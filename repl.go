@@ -5,12 +5,19 @@ import (
 	"fmt"
 	"bufio"
 	"os"
+	"github.com/jpanderson91/Pokedex/internal/pokeapi"
 )
 
 type cliCommand struct {
 	name string
 	description string
-	callback func() error
+	callback func(*config) error
+}
+
+type config struct {
+	pokeapiClient pokeapi.Client
+	nextPageURL *string
+	prevPageURL *string
 }
 
 func getCommands() map[string]cliCommand {
@@ -25,6 +32,18 @@ func getCommands() map[string]cliCommand {
     		description: "Displays a help message",
     		callback:    commandHelp,
 		},
+		"map": {
+			name: "map",
+			description: "Get the next page of locations",
+			callback: commandMap,
+
+		},
+		"mapb": {
+			name: "mapb",
+			description: "Get the previous page of locations",
+			callback: commandMapb,
+    		
+		},
 	}
 }
 func cleanInput(text string) []string {
@@ -37,7 +56,7 @@ func cleanInput(text string) []string {
 }
 
 
-func startRepl() {
+func startRepl(cfg *config) {
 	//infinite for loop. This lool will execute once for every command the user types in (we don't want to exit the program after just one command)
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
@@ -53,7 +72,7 @@ func startRepl() {
     		command, exists := getCommands()[commandName]
     		if exists {
        			 // call the callback here
-				 err := command.callback()
+				 err := command.callback(cfg)
 				 if err != nil {
 					fmt.Println(err)
 				 }
