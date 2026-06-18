@@ -1,1 +1,1 @@
-![Pokedex Animation](./assets/Recording 2026-06-18 122922.gif)
+![Pokedex Animation](./assets/pokedex.gif)
