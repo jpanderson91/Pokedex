@@ -1,1 +1,1 @@
-![Pokedex Animation](./assets/pokedextwo.gif)
+![Pokedex Animation](./assets/pokedex.gif)
