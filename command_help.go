@@ -1,9 +1,10 @@
 package main
+
 import (
 	"fmt"
 
 )
-func commandHelp(*config) error {
+func commandHelp(cfg *config, _ []string) error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	fmt.Println("help: Displays a help message")

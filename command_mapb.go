@@ -1,10 +1,11 @@
 package main
+
 import (
 	"fmt"
 	"errors"
 
 )
-func commandMapb(cfg *config) error {
+func commandMapb(cfg *config, _ []string) error {
         if cfg.prevPageURL == nil {
         return errors.New("you're on the first page")
     }
