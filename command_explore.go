@@ -5,7 +5,7 @@ import (
     "strings"
 )
 
-func commandExplore(cfg *config, args []string) error {
+func commandExplore(cfg *config, args ...string) error {
     if len(args) == 0 {
         return fmt.Errorf("usage: explore <area_name>")
     }
